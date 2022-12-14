@@ -1,60 +1,54 @@
+#!name=基础配置模块
+#!desc=
+
 [General]
+# Auto
 loglevel = notify
-dns-server = 223.5.5.5, 223.6.6.6, 114.114.114.114, 114.114.115.115, 8.8.8.8, 8.8.4.4, system
-allow-wifi-access = false
-show-error-page-for-reject = false
-ipv6 = true
-wifi-assist = false
-network-framework = true
-udp-policy-not-supported-behaviour = REJECT
-internet-test-url = http://www.gstatic.com/generate_204
-proxy-test-url = http://www.apple.com/
-test-timeout = 2
-geoip-maxmind-url = https://github.com/Hackl0us/GeoIP2-CN/raw/release/Country.mmdb
-all-hybrid = false
 skip-proxy = 192.168.0.0/24, 10.0.0.0/8, 172.16.0.0/12, 127.0.0.1, localhost, *.local, sequoia.apple.com, passenger.t3go.cn, e.crashlytics.com, captive.apple.com, seed-sequoia.siri.apple.com
 exclude-simple-hostnames = true
-use-local-host-item-for-proxy = false
-include-all-networks = false
-include-local-networks = false
+# macOS
+show-error-page-for-reject = false
+ipv6 = false
+wifi-assist = false
+network-framework = false
+udp-policy-not-supported-behaviour = reject
+internet-test-url = http://www.gstatic.com/generate_204
+proxy-test-url = http://cp.cloudflare.com/generate_204
+test-timeout = 2
+geoip-maxmind-url = https://cdn.jsdelivr.net/gh/Hackl0us/GeoIP2-CN@release/Country.mmdb
+all-hybrid = true
+force-http-engine-hosts = *:80,*:4480,*:9120
+# > Internet 测试 URL
+hijack-dns = 8.8.8.8:53, 8.8.4.4:53, 1.1.1.1:53, 1.0.0.1:53
+compatibility-mode = 3
+http-api-web-dashboard = true
+read-etc-hosts = true
 ipv6-vif = auto
-always-real-ip = *.lan
 # DNS
-hijack-dns = 8.8.8.8:53, 8.8.4.4:53, 1.1.1.1:53, 1.0.0.1:53, 198.18.0.2:53
-encrypted-dns-server = quic://dns.adguard-dns.com
+dns-server = 223.5.5.5, 223.6.6.6, 114.114.114.114, 114.114.115.115, 1.1.1.1, 1.0.0.1, system
+encrypted-dns-server = h3://1.1.1.1/dns-query
+always-real-ip = *.lan
+
 
 [Replica]
 hide-apple-request = 1
 hide-crash-reporter-request = 1
 hide-udp = 1
-keyword-filter-type = none
-keyword-filter-disabled = jd, ddimg
 
 [Rule]
-DOMAIN-SET,https://anti-ad.net/surge2.txt,REJECT
-DOMAIN-SET,https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/AdGuardSDNSFilter/AdGuardSDNSFilter_Domain.list,REJECT // AdGuardSDNSFilter
-RULE-SET,https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/Advertising/Advertising.list,REJECT,update-interval=14400
-RULE-SET,https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/Hijacking/Hijacking.list,REJECT,update-interval=14400
-RULE-SET,https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/Privacy/Privacy.list,REJECT,update-interval=14400 // 隐私保护
-DOMAIN-SET,https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/Privacy/Privacy_Domain.list,REJECT // 隐私保护
-RULE-SET,https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/Proxy/Proxy.list,自动切换,update-interval=14400 // Proxy
-DOMAIN-SET,https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/Proxy/Proxy_Domain.list,自动切换 // Proxy_Domain
-# Telegram
-RULE-SET,https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/Telegram/Telegram.list,自动切换,update-interval=14400
-# China 中国直连
-RULE-SET,https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/DouYin/DouYin.list,DIRECT,update-interval=14400 // 🎵 抖音
-RULE-SET,https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/China/China.list,DIRECT,update-interval=14400 // China
+RULE-SET,https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/Apple/Apple.list,DIRECT,update-interval=14400
+RULE-SET,https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/China/China.list,DIRECT,update-interval=14400
 DOMAIN-SET,https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/China/China_Domain.list,DIRECT // China_Domain
-RULE-SET,https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/Apple/Apple.list,DIRECT,update-interval=14400 // 🍎 Apple
+RULE-SET,https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/ChinaIPs/ChinaIPs.list,DIRECT,update-interval=14400
+DOMAIN-SET,https://anti-ad.net/surge2.txt,REJECT // anti-ad
 # REJECT-NO-DROP 表示不使用默认的自动丢包逻辑，这样 Surge 每次都会返回 ICMP Port Unreachable，应用会立刻回退而不是等超时。
 AND,((PROTOCOL,UDP), (DEST-PORT,443)),REJECT-NO-DROP
-DOMAIN,apps.apple.com,自动切换
 DOMAIN-SUFFIX,ls.apple.com,DIRECT // Apple Maps
 DOMAIN-SUFFIX,store.apple.com,DIRECT // Apple Store Online
-RULE-SET,SYSTEM,DIRECT
+# 以下规则将触发本地 DNS 解析
 RULE-SET,LAN,DIRECT
 GEOIP,CN,DIRECT
-FINAL,自动切换,dns-failed
+
 
 [Host]
 # > Firebase Cloud Messaging
@@ -64,13 +58,9 @@ dl.google.com = server:119.29.29.29
 dl.l.google.com = server:119.29.29.29
 update.googleapis.com = server:119.29.29.29
 # >
-*.taobao.com = server:223.5.5.5
-*.taobao.com = server:223.6.6.6
-*.tmall.com = server:223.5.5.5
 *.alipay.com = server:223.5.5.5
 *.alicdn.com = server:223.5.5.5
 *.aliyun.com = server:223.5.5.5
-*.jd.com = server:119.28.28.28
 *.qq.com = server:119.28.28.28
 *.tencent.com = server:119.28.28.28
 *.weixin.com = server:119.28.28.28
@@ -81,19 +71,18 @@ hdslb.com = server:119.29.29.29
 *.126.net = server:119.29.29.29
 *.127.net = server:119.29.29.29
 *.netease.com = server:119.29.29.29
-*.mi.com = server:119.29.29.29
-*.xiaomi.com = server:119.29.29.29
-# *testflight.apple.com = 23.76.66.98
+*testflight.apple.com = 23.76.66.98
 # > PlayStation
 *.dl.playstation.net = server:119.29.29.29
+# > Router Admin Panel
+tplogin.cn = 192.168.1.1
 
 [URL Rewrite]
 # Redirect Google Search Service
 ^https?:\/\/(www.)?google\.cn https://www.google.com header
 # Redirect Google Maps Service
 ^https?:\/\/(ditu|maps).google\.cn https://maps.google.com header
-^https?:\/\/ad\.example - reject
-^https?:\/\/ad\.com/ad\.png _ reject
+^https?://ad\.example - reject
 # Redirect HTTP to HTTPS
 ^https?:\/\/(www.)?taobao\.com\/ https://taobao.com/ 302
 ^https?:\/\/(www.)?jd\.com\/ https://www.jd.com/ 302
@@ -158,3 +147,6 @@ hdslb.com = server:119.29.29.29
 # AICoin
 ^http:\/\/(www.)?aicoin\.cn\/$ https://www.aicoin.com/ 302
 
+[MITM]
+h2 = true
+hostname = %APPEND% *.google.cn, *.google.com, *.gstatic.com, -CUSTOMMitM
