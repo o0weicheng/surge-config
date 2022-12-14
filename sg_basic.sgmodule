@@ -1,39 +1,7 @@
-#!name=基础配置模块
-#!desc=
-
-[General]
-# Auto
-loglevel = notify
-skip-proxy = 192.168.0.0/24, 10.0.0.0/8, 172.16.0.0/12, 127.0.0.1, localhost, *.local, sequoia.apple.com, passenger.t3go.cn, e.crashlytics.com, captive.apple.com, seed-sequoia.siri.apple.com
-exclude-simple-hostnames = true
-# macOS
-show-error-page-for-reject = false
-ipv6 = false
-wifi-assist = false
-network-framework = false
-udp-policy-not-supported-behaviour = reject
-internet-test-url = http://www.gstatic.com/generate_204
-proxy-test-url = http://cp.cloudflare.com/generate_204
-test-timeout = 2
-geoip-maxmind-url = https://cdn.jsdelivr.net/gh/Hackl0us/GeoIP2-CN@release/Country.mmdb
-all-hybrid = true
-force-http-engine-hosts = *:80,*:4480,*:9120
-# > Internet 测试 URL
-hijack-dns = 8.8.8.8:53, 8.8.4.4:53, 1.1.1.1:53, 1.0.0.1:53
-compatibility-mode = 3
-http-api-web-dashboard = true
-read-etc-hosts = true
-ipv6-vif = auto
-# DNS
-dns-server = 223.5.5.5, 223.6.6.6, 114.114.114.114, 114.114.115.115, 1.1.1.1, 1.0.0.1, system
-encrypted-dns-server = h3://1.1.1.1/dns-query
-always-real-ip = *.lan
-
-
-[Replica]
-hide-apple-request = 1
-hide-crash-reporter-request = 1
-hide-udp = 1
+#!name=Basic Surge module
+#!desc=基础版配置模块
+#!rule=5
+#!mimt=4
 
 [Rule]
 RULE-SET,https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/Apple/Apple.list,DIRECT,update-interval=14400
@@ -41,14 +9,6 @@ RULE-SET,https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Su
 DOMAIN-SET,https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/China/China_Domain.list,DIRECT // China_Domain
 RULE-SET,https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/ChinaIPs/ChinaIPs.list,DIRECT,update-interval=14400
 DOMAIN-SET,https://anti-ad.net/surge2.txt,REJECT // anti-ad
-# REJECT-NO-DROP 表示不使用默认的自动丢包逻辑，这样 Surge 每次都会返回 ICMP Port Unreachable，应用会立刻回退而不是等超时。
-AND,((PROTOCOL,UDP), (DEST-PORT,443)),REJECT-NO-DROP
-DOMAIN-SUFFIX,ls.apple.com,DIRECT // Apple Maps
-DOMAIN-SUFFIX,store.apple.com,DIRECT // Apple Store Online
-# 以下规则将触发本地 DNS 解析
-RULE-SET,LAN,DIRECT
-GEOIP,CN,DIRECT
-
 
 [Host]
 # > Firebase Cloud Messaging
@@ -148,5 +108,4 @@ tplogin.cn = 192.168.1.1
 ^http:\/\/(www.)?aicoin\.cn\/$ https://www.aicoin.com/ 302
 
 [MITM]
-h2 = true
 hostname = %APPEND% *.google.cn, *.google.com, *.gstatic.com, -CUSTOMMitM
