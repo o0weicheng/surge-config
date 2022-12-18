@@ -1,5 +1,5 @@
 #!name=Basic Surge module
-#!desc=基础版配置模块
+#!desc=基础版配置模块 v1.0.1
 #!rule=5
 #!mimt=4
 
@@ -34,9 +34,11 @@ hdslb.com = server:119.29.29.29
 *.126.net = server:119.29.29.29
 *.127.net = server:119.29.29.29
 *.netease.com = server:119.29.29.29
-*testflight.apple.com = 23.76.66.98
+# *testflight.apple.com = 23.76.66.98
+*.testflight.apple.com = server:8.8.8.8
 # > PlayStation
 *.dl.playstation.net = server:119.29.29.29
+*.apple.com = server:system
 # > Router Admin Panel
 tplogin.cn = 192.168.1.1
 
