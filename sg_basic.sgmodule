@@ -1,17 +1,16 @@
 #!name=Basic Surge module
-#!desc=基础版配置模块 v1.0.1
+#!desc=基础版配置模块 v1.0.2
 #!rule=5
 #!mimt=4
 
 [Rule]
-RULE-SET,https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/Hijacking/Hijacking.list,REJECT,update-interval=14400
-RULE-SET,https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/Privacy/Privacy.list,REJECT,update-interval=14400 // 隐私保护
-DOMAIN-SET,https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/Privacy/Privacy_Domain.list,REJECT // 隐私保护
 RULE-SET,https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/Apple/Apple.list,DIRECT,update-interval=14400
 RULE-SET,https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/China/China.list,DIRECT,update-interval=14400
 DOMAIN-SET,https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/China/China_Domain.list,DIRECT // China_Domain
 RULE-SET,https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/ChinaIPs/ChinaIPs.list,DIRECT,update-interval=14400
-DOMAIN-SET,https://anti-ad.net/surge2.txt,REJECT // anti-ad
+RULE-SET,https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/Hijacking/Hijacking.list,REJECT,update-interval=14400
+RULE-SET,https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/Privacy/Privacy.list,REJECT,update-interval=14400 // 隐私保护
+DOMAIN-SET,https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/Privacy/Privacy_Domain.list,REJECT // 隐私保护
 
 [Host]
 # > Firebase Cloud Messaging
@@ -39,14 +38,12 @@ hdslb.com = server:119.29.29.29
 # > PlayStation
 *.dl.playstation.net = server:119.29.29.29
 *.apple.com = server:system
-# > Router Admin Panel
-tplogin.cn = 192.168.1.1
 
 [URL Rewrite]
 # Redirect Google Search Service
-^https?:\/\/(www.)?google\.cn https://www.google.com header
+^https?:\/\/(www.)?google\.cn https://www.google.com 302
 # Redirect Google Maps Service
-^https?:\/\/(ditu|maps).google\.cn https://maps.google.com header
+^https?:\/\/(ditu|maps).google\.cn https://maps.google.com 302
 ^https?://ad\.example - reject
 # Redirect HTTP to HTTPS
 ^https?:\/\/(www.)?taobao\.com\/ https://taobao.com/ 302
