@@ -1,43 +1,55 @@
 #!name=Basic Surge module
 #!desc=基础版配置模块 v1.0.2
-#!rule=5
+#!update=修改RULE；修改HOST
+#!rule=7
 #!mimt=4
 
 [Rule]
-RULE-SET,https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/Apple/Apple.list,DIRECT,update-interval=14400
-RULE-SET,https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/China/China.list,DIRECT,update-interval=14400
-DOMAIN-SET,https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/China/China_Domain.list,DIRECT // China_Domain
-RULE-SET,https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/ChinaIPs/ChinaIPs.list,DIRECT,update-interval=14400
-RULE-SET,https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/Hijacking/Hijacking.list,REJECT,update-interval=14400
-RULE-SET,https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/Privacy/Privacy.list,REJECT,update-interval=14400 // 隐私保护
-DOMAIN-SET,https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/Privacy/Privacy_Domain.list,REJECT // 隐私保护
+# 1.1.1.1
+RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/ChinaIPs/ChinaIPs.list,DIRECT,update-interval=14400 // ChinaIPs
+# China
+RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/China/China.list,DIRECT,update-interval=14400 // China
+DOMAIN-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/China/China_Domain.list,DIRECT // China Domain
+RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Hijacking/Hijacking.list,REJECT,update-interval=14400 // Hijacking
+RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Privacy/Privacy.list,REJECT,update-interval=14400 // 隐私保护
+DOMAIN-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Privacy/Privacy_Domain.list,REJECT // 隐私保护
+# Proxy
+#RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Proxy/Proxy.list,✍︎ 手动切换,update-interval=14400 // Proxy
+#DOMAIN-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Proxy/Proxy_Domain.list,✍︎ 手动切换 // Proxy Domain
+AND,((PROTOCOL,UDP), (DEST-PORT,443)),REJECT-NO-DROP
 
 [Host]
-# > Firebase Cloud Messaging
-mtalk.google.com = 108.177.125.188
-# > Google Dl
-dl.google.com = server:119.29.29.29
-dl.l.google.com = server:119.29.29.29
-update.googleapis.com = server:119.29.29.29
-# >
+mtalk.google.com = server:1.1.1.1
+dl.google.com = server:1.1.1.1
+dl.l.google.com = server:1.1.1.1
+update.googleapis.com = server:1.1.1.1
+*.facebook.com = server:1.1.1.1
+*.instagram.com = server:1.1.1.1
+# > Ali
 *.alipay.com = server:223.5.5.5
 *.alicdn.com = server:223.5.5.5
 *.aliyun.com = server:223.5.5.5
-*.qq.com = server:119.28.28.28
-*.tencent.com = server:119.28.28.28
-*.weixin.com = server:119.28.28.28
-*.bilibili.com = server:119.29.29.29
-hdslb.com = server:119.29.29.29
-*.163.com = server:119.29.29.29
-*.126.com = server:119.29.29.29
-*.126.net = server:119.29.29.29
-*.127.net = server:119.29.29.29
-*.netease.com = server:119.29.29.29
-# *testflight.apple.com = 23.76.66.98
-*.testflight.apple.com = server:8.8.8.8
+*.taobao.com = server:223.5.5.5
+# > Tencent
+*.qq.com = server:https://sm2.doh.pub/dns-query
+*.tencent.com = server:https://sm2.doh.pub/dns-query
+*.weixin.com = server:https://sm2.doh.pub/dns-query
+*.weixin.qq.com = server:https://sm2.doh.pub/dns-query
+# >
+*.bilibili.com = server:208.67.222.222
+hdslb.com = server:1.1.1.1
+*.163.com = server:208.67.222.222
+*.126.com = server:208.67.222.222
+*.126.net = server:208.67.222.222
+*.127.net = server:208.67.222.222
+*.netease.com = server:208.67.222.222
+*.testflight.apple.com = server:1.1.1.1
 # > PlayStation
-*.dl.playstation.net = server:119.29.29.29
-*.apple.com = server:system
+*.playstation.net = server:1.1.1.1
+# > Apple
+*.apple.com = server:syslib
+
+
 
 [URL Rewrite]
 # Redirect Google Search Service
