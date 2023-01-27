@@ -5,3 +5,14 @@
 
 [General]
 skip-proxy = %APPEND% www.abchina.com.cn,login-service.mobile-bank.psbc.com,mobile-bank.psbc.com
+
+[Rule]
+# 屏蔽HTTP3/QUIC协议
+# 阻止所有UDP流量进入443端口，使HTTP3请求回落到TCP流量。
+AND,((PROTOCOL,UDP),(DEST-PORT,443)),REJECT-NO-DROP
+
+# 屏蔽YouTube的UDP
+AND,((PROTOCOL,UDP),(DOMAIN-SUFFIX,googlevideo.com)),REJECT-NO-DROP
+
+# Safari 防跳转
+DOMAIN,app-site-association.cdn-apple.com,Reject
