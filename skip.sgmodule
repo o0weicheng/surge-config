@@ -1,4 +1,4 @@
-#!name=跳过部分代理 v1.0.2
+#!name=跳过部分代理 v1.0.3
 #!desc=解决某些 APP 在开启 Surge 后无法打开
 #!app=中国农业银行: www.abchina.com.cn
 #!app=中国邮政储蓄银行: login-service.mobile-bank.psbc.com,mobile-bank.psbc.com
@@ -7,12 +7,7 @@
 skip-proxy = %APPEND% www.abchina.com.cn,login-service.mobile-bank.psbc.com,mobile-bank.psbc.com
 
 [Rule]
-# 屏蔽HTTP3/QUIC协议
-# 阻止所有UDP流量进入443端口，使HTTP3请求回落到TCP流量。
-AND,((PROTOCOL,UDP),(DEST-PORT,443)),REJECT-NO-DROP
 
-# 屏蔽YouTube的UDP
-AND,((PROTOCOL,UDP),(DOMAIN-SUFFIX,googlevideo.com)),REJECT-NO-DROP
+AND,((PROTOCOL,UDP),(DOMAIN-SUFFIX,googlevideo.com)),REJECT-NO-DROP # 屏蔽YouTube的UDP
 
-# Safari 防跳转
-DOMAIN,app-site-association.cdn-apple.com,Reject
+DOMAIN,app-site-association.cdn-apple.com,Reject # Safari 防跳转
